@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SHADOW TEE AES-256 Encryptor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #0ff;
+    }
+    .circle-loader {
+      width: 100px;
+      height: 100px;
+      border: 8px solid #0f0;
+      border-top: 8px solid transparent;
+      border-radius: 50%;
+      animation: spin 3s linear infinite;
+      margin: 1rem auto;
+      position: relative;
+    }
+    .circle-loader::before {
+      content: "𝗧𝗜𝗘𝗚𝗢";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #0f0;
+      font-size: 0.6rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #logs {
+      background: #111;
+      border: 1px solid #0f0;
+      padding: 10px;
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 700px;
+      height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+    textarea {
+      width: 90%;
+      max-width: 700px;
+      height: 140px;
+      background: #000;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    input[type="file"], button {
+      margin: 0.5rem;
+      padding: 10px 20px;
+      background: #0f0;
+      color: black;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #55ff55;
+    }
+  </style>
+</head>
+<body>
+
+<h1>𝗦𝗛𝗔𝗗𝗢𝗪 𝗧𝗘𝗘 𝗔𝗘𝗦-256 𝗘𝗡𝗖𝗥𝗬𝗣𝗧𝗘𝗥</h1>
+<div class="circle-loader"></div>
+
+<div id="logs">[+] Loading AES-256-GCM engine...</div>
+
+<h3>Encrypt Code</h3>
+<textarea id="codeInput" placeholder="Paste your HTML, JS, Node.js or code here..."></textarea><br>
+<button onclick="encryptCode()">𝗘𝗡𝗖 𝗔𝗡𝗗 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗 (AES-256)</button>
+
+<h3>𝗘𝗡𝗖 𝗔𝗡𝗗 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗</h3>
+<input type="file" id="fileInput" /><br>
+<button onclick="encryptFile()">Encrypt File (AES-256)</button>
+
+<script>
+  const logEl = document.getElementById("logs");
+  const logs = [
+    "[+] AES-256 initialized.",
+    "[+] Awaiting input...",
+    "[+] Secure key generation ready."
+  ];
+  let logIndex = 0;
+  const writer = () => {
+    if (logIndex < logs.length) {
+      logEl.textContent += "\n" + logs[logIndex++];
+      setTimeout(writer, 1000);
+    }
+  };
+  writer();
+
+  async function generateKey() {
+    return crypto.subtle.generateKey(
+      { name: "AES-GCM", length: 256 }, // AES-256
+      true,
+      ["encrypt", "decrypt"]
+    );
+  }
+
+  async function encryptData(data) {
+    const enc = new TextEncoder().encode(data);
+    const key = await generateKey();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+
+    const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc);
+    const keyRaw = await crypto.subtle.exportKey("raw", key);
+
+    return {
+      ciphertext: btoa(String.fromCharCode(...new Uint8Array(encrypted))),
+      key: btoa(String.fromCharCode(...new Uint8Array(keyRaw))),
+      iv: btoa(String.fromCharCode(...iv))
+    };
+  }
+
+  function download(content, filename) {
+    const blob = new Blob([content], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  }
+
+  async function encryptCode() {
+    const text = document.getElementById("codeInput").value.trim();
+    if (!text) return alert("Enter code to encrypt.");
+
+    const result = await encryptData(text);
+    const output = `// AES-256-GCM Encrypted by JamesTech\nKEY:${result.key}\nIV:${result.iv}\nDATA:${result.ciphertext}`;
+    download(output, "encrypted_code.james");
+    logEl.textContent += "\n[+] Code encrypted successfully.";
+  }
+
+  async function encryptFile() {
+    const fileInput = document.getElementById("fileInput");
+    if (!fileInput.files.length) return alert("Select a file first.");
+    
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      const content = e.target.result;
+      const result = await encryptData(content);
+      const output = `// AES-256-GCM Encrypted by JamesTech\nKEY:${result.key}\nIV:${result.iv}\nDATA:${result.ciphertext}`;
+      download(output, file.name + ".james");
+      logEl.textContent += `\n[+] File "${file.name}" encrypted successfully.`;
+    };
+    reader.readAsText(file);
+  }
+</script>
+
+</body>
+</html>
+  </div><a class="back-button" href="index2.html">𝗖𝗥𝗔𝗙𝗧𝗘𝗗 𝗕𝗬 𝗧𝗜𝗘𝗚𝗢</a>
+
+</body>
+</html>

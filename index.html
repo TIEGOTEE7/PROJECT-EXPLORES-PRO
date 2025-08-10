@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIEGO'S PROJECT SUPPORT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Poppins', sans-serif;
+            color: blanchedalmond;
+            margin: 0;
+            padding: 20px;
+        }
+        .premium-container {
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .premium-header .greeting {
+            font-size: 1.5rem;
+            color: blanchedalmond;
+        }
+        .menu-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00f5ff;
+            margin: 20px 0;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .menu-item {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px #00f5ff;
+            background: rgba(255,255,255,0.12);
+        }
+        .menu-item-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .item-icon i {
+            font-size: 1.8rem;
+            color: #00f5ff;
+        }
+        .item-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .item-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .premium-footer, .copyright {
+            text-align: center;
+            color: #aaa;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .social-links a {
+            color: #00f5ff;
+            margin: 0 8px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        .social-links a:hover {
+            color: #fff;
+        }
+        .menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Changed from left to right */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.menu-toggle div {
+    background-color: #00f5ff;
+    height: 4px;
+    border-radius: 2px;
+}
+
+   #side-menu {
+    position: fixed;
+    top: 0;
+    right: -200px;
+    width: 200px;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding-top: 60px;
+}
+
+#side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+#side-menu li {
+    padding: 15px;
+    text-align: center;
+}
+
+#side-menu a {
+    color: #00f5ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#side-menu a:hover {
+    color: #fff;
+}
+
+        .learn-btn {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.learn-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+        
+    </style>
+</head>
+<body>
+ 
+  <video autoplay muted loop playsinline id="bg-video" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; object-fit: cover;">
+    <source src="https://files.catbox.moe/ojlhm1.mp4" type="video/mp4">
+</video>
+    <source src="https://files.catbox.moe/ojlhm1.mp4" type="audio/mp3"> 
+</audio>
+    
+<script>
+
+  const text = "WELCOME TO SHADOW TEE MODDERS APP";
+  const typingElement = document.getElementById('typing-text');
+  let index = 0;
+
+  function type() {
+    if (index < text.length) {
+      typingElement.textContent += text.charAt(index);
+      index++;
+      setTimeout(type, 150);
+    }
+  }
+
+  type();
+</script>
+        
+    <div class="premium-container">
+        <div class="premium-header">
+            <div class="header-info">
+                <div class="greeting" id="greeting">Welcome</div>
+                <div class="datetime" id="datetime">Loading...</div>
+            </div>
+        </div>
+
+   <div id="visitor-count" style="margin: 10px 0; font-weight: bold; color: #00f5ff;">
+    Visitors Online: <span id="visitorNumber">0</span>
+</div>
+
+<script>
+    // Simulated random number of visitors online
+    function updateVisitorCount() {
+        const visitorNumber = Math.floor(Math.random() * 50) + 5; // between 5 and 54
+        document.getElementById('visitorNumber').textContent = visitorNumber;
+    }
+
+    updateVisitorCount();
+    setInterval(updateVisitorCount, 10000); // update every 10 seconds
+</script>
+
+<div id="system-info" style="margin: 10px 0; font-weight: bold; color: #00f5ff;">
+    Your System Info: <span id="sysInfo"></span>
+</div>
+
+<script>
+    function getSystemInfo() {
+        const platform = navigator.platform;
+        const userAgent = navigator.userAgent;
+        const browser = (() => {
+            if (userAgent.indexOf("Chrome") > -1) return "Chrome";
+            if (userAgent.indexOf("Safari") > -1) return "Safari";
+            if (userAgent.indexOf("Firefox") > -1) return "Firefox";
+            if (userAgent.indexOf("MSIE") > -1 || !!document.documentMode) return "IE";
+            return "Unknown Browser";
+        })();
+        return `Platform: ${platform}, Browser: ${browser}`;
+    }
+
+    document.getElementById('sysInfo').textContent = getSystemInfo();
+</script>
+
+        <div class="menu-title">𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐄𝐗𝐏𝐋𝐎𝐑𝐄𝐑</div>
+<div class="menu-grid">
+    <div class="menu-item" onclick="window.location.href='index2.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-magic"></i></div>
+            <div>
+                <div class="item-name">𝐀𝐔𝐓𝐎 𝐄𝐍𝐇𝐀𝐍𝐂𝐄</div>
+                <div class="item-desc">One-click AI optimization for photos or data.</div>
+            </div>
+        </div>
+    </div>
+        <div class="menu-item" onclick="window.location.href='encoder.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐄𝐍𝐂𝐎𝐃𝐄𝐑 </div>
+                <div class="item-desc">𝙷𝙴𝚁𝙴 𝚈𝙾𝚄 𝚂𝙽𝙸𝙵𝙵,𝙴𝙳𝙸𝚃 𝙷𝙾𝚂𝚃 𝚃𝙷𝙴𝙽 𝚈𝙾𝚄 𝙴𝙽𝙹𝙾𝚈...</div>
+            </div>
+        </div>
+        </div>
+    <div class="menu-item" onclick="window.location.href='quotes.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐃𝐄𝐄𝐏-𝐐𝐔𝐎𝐓𝐄𝐒 </div>
+                <div class="item-desc">𝙼𝙰𝙺𝙴 𝚂𝚄𝚁𝙴 𝚄 𝙰𝚁𝙴 𝙽𝙾𝚃 𝙸𝙽 𝙿𝚄𝙱𝙻𝙸𝙲 𝙲𝙰𝚄𝚂𝙴 𝚄 𝙰𝚁𝙴 𝙶𝙾𝙽 𝙲𝚁𝚈 𝙸 𝙰𝙸𝙽𝚃 𝙹𝙾𝙺𝙸𝙽𝙶...</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='pickup.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐏𝐈𝐂𝐊𝐔𝐏 𝐋𝐈𝐍𝐄𝐒 </div>
+                <div class="item-desc">𝙿𝙸𝙲𝙺𝚄𝙿 𝚂𝙾𝙼𝙴 𝙻𝙸𝙽𝙴𝚂 𝙰𝙽𝙳 𝚁𝙸𝚉𝚉 𝙷𝙴𝚁 𝚄𝙿...</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='learnhtml.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐋𝐄𝐀𝐑𝐍 𝐇𝐓𝐌𝐋 </div>
+                <div class="item-desc">𝙻𝙴𝙰𝚁𝙽 𝙵𝚁𝙴𝙴 𝙷𝚃𝙼𝙻 𝙱𝙰𝚂𝙸𝙲𝚂 𝚆𝙸𝚃𝙷 𝚃𝙸𝙴𝙶𝙾 𝚃𝙴𝙴</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='htmleditor.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐇𝐓𝐌𝐋-𝐄𝐃𝐈𝐓𝐎𝐑 </div>
+                <div class="item-desc">𝙴𝙳𝙸𝚃 𝚈𝙾𝚄𝚁 𝙷𝚃𝙼𝙻 𝚆𝙸𝚃𝙷 𝚃𝙸𝙴𝙶𝙾 𝙰𝙽𝙳 𝙲𝚁𝙴𝙰𝚃𝙴 𝚈𝙾𝚄𝚁 𝙾𝚆𝙽 𝙰𝙿𝙿𝚂...</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='portfolio.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐏𝐎𝐑𝐓𝐅𝐎𝐋𝐈𝐎 𝐁𝐔𝐈𝐋𝐃𝐄𝐑 </div>
+                <div class="item-desc">𝙶𝙴𝙽𝙴𝚁𝙰𝚃𝙴 𝚄𝚁 𝙿𝙾𝚁𝚃𝙵𝙾𝙻𝙸𝙾 𝚄𝚂𝙸𝙽𝙶 𝚃𝙷𝙸𝚂 𝚃𝙾𝙾𝙻.</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='allinone.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐀𝐋𝐋 𝐈𝐍 𝐎𝐍𝐄 [𝐀𝐈𝐎] </div>
+                <div class="item-desc">𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙰𝙻𝙻 𝚂𝙾𝙲𝙸𝙰𝙻 𝙼𝙴𝙳𝙸𝙰 𝚅𝙸𝙳𝙴𝙾𝚂.𝚆𝙴𝙻𝙻 𝙽𝙾𝚃 𝙰𝙻𝙻 𝙱𝚄𝚃 𝙰𝚃𝙻𝙴𝙰𝚂𝚃 𝚄 𝚆𝙸𝙻𝙻 𝙳𝙾𝚆𝙽 𝚂𝙾𝙼𝙴.</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='ban.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏-𝐑𝐄𝐏𝐎𝐑𝐓𝐄𝐑 </div>
+                <div class="item-desc">𝙵𝙾𝚁 𝙴𝙳𝚄𝙲𝙰𝚃𝙸𝙾𝙽𝙰𝙻 𝙿𝚄𝚁𝙿𝙾𝚂𝙴𝚂 𝙾𝙽𝙻𝚈.𝚂𝙷𝙰𝙳𝙾𝚆 𝚃𝙴𝙴 𝚆𝙸𝙻𝙻 𝙽𝙾𝚃 𝙱𝙴 𝙷𝙴𝙻𝙳 𝚁𝙴𝚂𝙿𝙾𝙽𝚂𝙸𝙱𝙻𝙴 𝙵𝙾𝚁 𝙰𝙽𝚈 𝙸𝙻𝙻𝙴𝙶𝙰𝙻 𝙰𝙲𝚃𝙸𝚅𝙸𝚃𝙸𝙴𝚂 𝚄 𝙴𝙽𝙶𝙰𝙶𝙴 𝙸𝙽...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='unban.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-whatsapp"></i></div>
+            <div>
+                <div class="item-name">𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏-𝐀𝐂𝐂-𝐑𝐄𝐂𝐎𝐕𝐄𝐑</div>
+                <div class="item-desc">𝙳𝙾 𝙽𝙾𝚃 𝚅𝙸𝙾𝙻𝙰𝚃𝙴 𝚃𝙴𝚁𝙼𝚂 𝙰𝙽𝙳 𝙲𝙾𝙳𝙸𝚃𝙸𝙾𝙽𝚂 𝙾𝙽 𝙿𝚄𝚁𝙿𝙾𝚂𝙴 𝙿𝙻𝙰𝙽𝙽𝙸𝙽𝙶 𝚃𝙾 𝚄𝚂𝙴 𝚃𝙷𝙸𝚂 𝚃𝙾𝙾𝙻.</div>
+            </div>
+        </div>
+    </div>
+        <div class="menu-item" onclick="window.location.href='index3.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-server"></i></div>
+            <div>
+                <div class="item-name">𝐇𝐎𝐒𝐓𝐈𝐍𝐆 𝐏𝐀𝐍𝐄𝐋</div>
+                <div class="item-desc">𝙲𝚁𝙴𝙰𝚃𝙴 𝚂𝙴𝚁𝚅𝙴𝚁 𝙰𝙽𝙳 𝚂𝚃𝙰𝚁𝚃 𝙷𝙾𝚂𝚃𝙸𝙽𝙶 𝙰 𝙱𝙾𝚃 𝙵𝙾𝚁 𝙵𝚁𝙴𝙴.</div>
+            </div>
+        </div>
+        </div>
+        <div class="menu-item" onclick="window.location.href='appstore.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-car"></i></div>
+            <div>
+                <div class="item-name">𝐓𝐄𝐄'𝐒 𝐀𝐏𝐏 𝐒𝐓𝐎𝐑𝐄</div>
+                <div class="item-desc">𝙰𝚅𝙾𝙸𝙳 𝙿𝙻𝙰*𝚂𝚃𝙾𝚁𝙴 𝙳𝚁𝙰𝙸𝙽𝙸𝙽𝙶 𝚈𝙾𝚄𝚁 𝙳𝙰𝚃𝙰 𝙰𝙽𝙳 𝚆𝙸𝚃𝙷 𝙹𝚄𝚂𝚃 𝙾𝙽𝙴 𝙲𝙻𝙸𝙲𝙺 𝚄 𝙶𝙴𝚃 𝚃𝙷𝙴 𝙰𝙿𝙿𝙻𝙸𝙲𝙰𝚃𝙸𝙾𝙽 𝚈𝙾𝚄 𝚆𝙰𝙽𝚃.</div>
+            </div>
+        </div>
+        </div>
+
+    <div class="menu-item" onclick="window.location.href='index4.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-font"></i></div>
+            <div>
+                <div class="item-name">𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐅𝐎𝐍𝐓𝐒</div>
+                <div class="item-desc">𝙿𝙻𝙰𝙲𝙴 𝙰𝙽𝙳 𝚃𝙴𝚇𝚃 𝚆𝙸𝚃𝙷 20+ 𝙵𝙾𝙽𝚃𝚂</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index5.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-eraser"></i></div>
+            <div>
+                <div class="item-name">𝐁𝐀𝐂𝐊𝐆𝐑𝐎𝐔𝐍𝐃 𝐑𝐄𝐌𝐎𝐕𝐄𝐑</div>
+                <div class="item-desc">𝙴𝚁𝙰𝚂𝙴 𝙱𝙻𝚄𝚁 𝙾𝚁 𝚁𝙴𝙿𝙻𝙰𝙲𝙴 𝙱𝙰𝙲𝙺𝙶𝚁𝙾𝚄𝙽𝙳 𝙴𝙰𝚂𝙻𝚈.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index6.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-robot"></i></div>
+            <div>
+                <div class="item-name">𝐀𝐈 𝐀𝐒𝐒𝐈𝐒𝐓𝐀𝐍𝐂𝐄</div>
+                <div class="item-desc">𝙲𝙷𝙰𝚃 𝚆𝙸𝚃𝙷 𝚃𝙴𝙴'𝚂 𝙽𝙴𝚆 𝙰𝙸 𝙰𝚂𝚂𝙸𝚂𝚃𝙰𝙽𝙲𝙴 𝙵𝙾𝚁 𝚆𝙾𝚁𝙺 𝙱𝚄𝚂𝙸𝙽𝙴𝚂𝚂𝙴𝚂 𝙾𝚁 𝚂𝙲𝙷𝙾𝙾𝙻 𝚆𝙾𝚁𝙺..</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index7.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-image"></i></div>
+            <div>
+                <div class="item-name">𝐅𝐀𝐊𝐄 𝐈𝐃 𝐌𝐀𝐊𝐄𝐑</div>
+                <div class="item-desc">𝙲𝚁𝙴𝙰𝚃𝙴 𝙰𝙽𝚈 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙸𝙳 𝙱𝚈 𝚄𝙿𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝙿𝙸𝙲𝚃𝚄𝚁𝙴, 𝙽𝙰𝙼𝙴 𝙰𝙽𝙳 𝙳𝙴𝚂𝙲𝚁𝙸𝙿𝚃𝙸𝙾𝙽.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index8.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-code"></i></div>
+            <div>
+                <div class="item-name">𝐖𝐄𝐁𝐒𝐈𝐓𝐄 𝐂𝐎𝐃𝐄 𝐅𝐈𝐋𝐄𝐒 𝐒𝐁𝐀𝐓𝐂𝐇𝐄𝐑</div>
+                <div class="item-desc">𝚂𝚃𝙴𝙰𝙻 𝙰𝙽𝚈 𝚆𝙴𝙱𝚂𝙸𝚃𝙴 𝙲𝙾𝙳𝙴𝚂 𝙹𝚄𝚂𝚃 𝙿𝙰𝚂𝚃𝙴 𝙻𝙸𝙽𝙺. https://www.facebook.com</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index9.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-key"></i></div>
+            <div>
+                <div class="item-name">𝐌𝐔𝐒𝐈𝐂 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑 </div>
+                <div class="item-desc">𝚂𝙸𝙼𝙿𝙻𝚈 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝚈𝙾𝚄𝚁 𝙵𝙰𝚅𝙾𝚁𝙸𝚃𝙴 𝙼𝚄𝚂𝙸𝙲 100% 𝙰𝙳-𝙵𝚁𝙴𝙴.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index10.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-pencil"></i></div>
+            <div>
+                <div class="item-name">𝐀𝐍𝐈𝐌𝐄 𝐖𝐎𝐑𝐋𝐃</div>
+                <div class="item-desc">𝚄𝚂𝙴 𝚃𝙷𝙸𝚂 𝚃𝙾𝙾𝙻 𝚃𝙾 𝙶𝙴𝙽𝙴𝚁𝙰𝚃𝙴 𝙰𝙽𝚈 𝙰𝙽𝙸𝙼𝙴 𝚄 𝙻𝙸𝙺𝙴.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-item" onclick="window.location.href='index11.html'">
+        <div class="menu-item-content">
+            <div class="item-icon"><i class="fas fa-fire"></i></div>
+            <div>
+                <div class="item-name">𝐏𝐎𝐑𝐍 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑 </div>
+                <div class="item-desc">𝙶𝙴𝙽𝙴𝚁𝙰𝚃𝙴 𝙴𝚇𝙿𝙻𝙸𝙲𝙸𝚃 𝙲𝙾𝙽𝚃𝙴𝙽𝚃 𝚆𝙸𝚃𝙷𝙾𝚄𝚃 𝙰𝙶𝙴 𝚅𝙴𝚁𝙸𝙵𝙸𝙲𝙰𝚃𝙸𝙾𝙽</div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item" onclick="window.location.href='index100.html'">
+    <div class="menu-item-content">
+        <div class="item-icon"><i class="fas fa-tools"></i></div>
+        <div>
+            <div class="item-name">HACKS</div>
+            <div class="item-desc">coming soon....</div>
+        </div>
+    </div>
+    </div>
+</div>
+        <div class="premium-footer">
+            <div>𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐌𝐎𝐃𝐄 𝐁𝐑𝐄𝐀𝐂𝐇𝐄𝐃.𝐂𝐎𝐍𝐓𝐀𝐂𝐓𝐈𝐍𝐆 𝐎𝐖𝐍𝐄𝐑</div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; <span id="current-year"></span>𝐏𝐎𝐖𝐄𝐑𝐄𝐃 𝐁𝐘 𝐒𝐇𝐀𝐃𝐎𝐖 𝐓𝐄𝐄 | 𝐀𝐋𝐋 𝐑𝐈𝐆𝐇𝐓𝐒 𝐑𝐄𝐒𝐄𝐑𝐕𝐄𝐃.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+    <script>
+    function updateGreeting() {
+        const now = new Date();
+        const hour = now.getHours();
+        let greeting = 'Welcome';
+
+        if (hour < 12) {
+            greeting = 'GOOD MORNING🌇';
+        } else if (hour < 18) {
+            greeting = 'GOOD AFTERNOON☀️';
+        } else {
+            greeting = 'GOOD EVENING 🌙';
+        }
+        document.getElementById('greeting').textContent = greeting;
+    }
+
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('datetime').textContent = now.toLocaleTimeString();
+    }
+
+    function updateBattery() {
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+                function batteryInfo() {
+                    const level = Math.round(battery.level * 100);
+                    const status = battery.charging ? '🔌 𝐂𝐇𝐀𝐑𝐆𝐈𝐍𝐆 𝐁𝐘 𝐓𝐈𝐄𝐆𝐎[🥺]' : '🔋𝐍𝐎𝐓 𝐂𝐇𝐀𝐑𝐆𝐈𝐍𝐆';
+                    document.getElementById('battery').textContent = `Battery: ${level}% - ${status}`;
+                }
+                batteryInfo();
+                battery.addEventListener('levelchange', batteryInfo);
+                battery.addEventListener('chargingchange', batteryInfo);
+            });
+        } else {
+            document.getElementById('battery').textContent = 'Battery info not supported';
+        }
+    }
+
+    updateGreeting();
+    updateTime();
+    setInterval(updateTime, 1000);
+    updateBattery();
+    
+</script>
+
+<div id="battery" style="margin-top:10px; color: #ccc;"></div>
+</body>
+</html>

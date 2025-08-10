@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHADOW TEE Portfolio Builder</title>
+  <style>
+    body {
+      background-color: black;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .loading-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #logs {
+      font-size: 1rem;
+      height: 50px;
+      margin-bottom: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #0f0;
+      animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .loader-button {
+      padding: 1rem 2rem;
+      border: 2px solid #0f0;
+      background: transparent;
+      color: #0f0;
+      font-weight: bold;
+      border-radius: 50%;
+      animation: rotate 2s linear infinite;
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #formContainer {
+      display: none;
+      padding: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    input, textarea, button {
+      padding: 0.5rem;
+      background: black;
+      border: 1px solid #0f0;
+      color: #0f0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-screen">
+    <div id="logs"></div>
+    <button class="loader-button">TIEGO_TEE7</button>
+  </div>
+
+  <div id="formContainer">
+    <h2>🔧 𝐒𝐇𝐀𝐃𝐎𝐖 𝐓𝐄𝐄 𝐏𝐎𝐑𝐓𝐅𝐎𝐋𝐈𝐎 𝐁𝐔𝐈𝐋𝐃𝐄𝐑</h2>
+    <form id="portfolioForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="title" placeholder="Your Title (e.g. Web Developer)" required />
+      <textarea id="bio" placeholder="Short Bio" required></textarea>
+      <input type="text" id="skills" placeholder="Skills (comma-separated)" required />
+      <input type="text" id="email" placeholder="Email" required />
+      <input type="text" id="github" placeholder="GitHub Link" />
+      <input type="text" id="linkedin" placeholder="LinkedIn Link" />
+      <button type="submit">📥 Generate & Download</button>
+    </form>
+  </div>
+
+  <script>
+    const logs = [
+      "Initializing Tiego's protocol...",
+      "Loading secure modules...",
+      "Injecting code into framework...",
+      "Access granted. Preparing builder...",
+      "Compiling UI components...",
+      "Done. Launching builder interface..."
+    ];
+
+    let index = 0;
+    let char = 0;
+    const logsElement = document.getElementById('logs');
+
+    function typeLogs() {
+      if (index < logs.length) {
+        if (char < logs[index].length) {
+          logsElement.textContent += logs[index][char++];
+          setTimeout(typeLogs, 50);
+        } else {
+          setTimeout(() => {
+            logsElement.textContent = "";
+            char = 0;
+            index++;
+            typeLogs();
+          }, 1000);
+        }
+      } else {
+        // Done loading
+        document.querySelector('.loading-screen').style.display = 'none';
+        document.getElementById('formContainer').style.display = 'block';
+      }
+    }
+
+    typeLogs();
+
+    // Portfolio generator
+    document.getElementById('portfolioForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const title = document.getElementById('title').value;
+      const bio = document.getElementById('bio').value;
+      const skills = document.getElementById('skills').value.split(',').map(s => s.trim()).join(', ');
+      const email = document.getElementById('email').value;
+      const github = document.getElementById('github').value;
+      const linkedin = document.getElementById('linkedin').value;
+
+      const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>${name} - Portfolio</title>
+  <style>
+    body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 2rem; }
+    h1, h2 { text-shadow: 0 0 5px #0f0; }
+    a { color: #0f0; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>${name}</h1>
+  <h2>${title}</h2>
+  <p>${bio}</p>
+  <p><strong>Skills:</strong> ${skills}</p>
+  <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+  ${github ? `<p><strong>GitHub:</strong> <a href="${github}" target="_blank">${github}</a></p>` : ''}
+  ${linkedin ? `<p><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank">${linkedin}</a></p>` : ''}
+  <footer>Powered by shadow tee aka Tiegotee7 on tik tok</footer>
+</body>
+</html>
+      `.trim();
+
+      const blob = new Blob([htmlContent], { type: "text/html" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${name.replace(/\s+/g, '_')}_portfolio.html`;
+      link.click();
+    });
+  </script>
+</body>
+</html>
+  </div><a class="back-button" href="index2.html">𝗖𝗥𝗔𝗙𝗧𝗘𝗗 𝗕𝗬 𝗧𝗜𝗘𝗚𝗢</a>
+
+</body>
+</html>
